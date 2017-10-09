@@ -4,7 +4,7 @@ import jssc.*;
 
 public class SerialComm {
 
-	SerialPort port;
+	static SerialPort port;
 
 	private boolean debug;  // Indicator of "debugging mode"
 	
@@ -23,7 +23,7 @@ public class SerialComm {
 			SerialPort.STOPBITS_1,
 			SerialPort.PARITY_NONE);
 		
-		debug = false; // Default is to NOT be in debug mode
+		debug = true; // Default is to NOT be in debug mode
 	}
 		
 	// TODO: Add writeByte() method from Studio 5
@@ -38,7 +38,7 @@ public class SerialComm {
 	}
 	// TODO: Add available() method
 
-	public boolean available() {
+	public static boolean available() {
 		try {
 			if (port.getInputBufferBytesCount() >= 1) {
 				return true;
@@ -50,24 +50,28 @@ public class SerialComm {
 	}
 	// TODO: Add readByte() method	
 	
-	public byte readByte(byte b){
+	public byte readByte(){
 		try {
 			byte[] a = port.readBytes(port.getInputBufferBytesCount());
+			System.out.println(a[0]);
 			return a[0];
 		}
 		catch (SerialPortException e) {
+			return (Byte)null;
 		}
-		return (Byte) null;
 	}
 	// TODO: Add a main() method
-	public void main() {
-		try {
-			SerialComm newObject = new SerialComm("");
-			if (available()) {
-				//readByte(newObject);
+	public static void main(String[] args) {
+		while (true) {
+			try {
+				SerialComm newObject = new SerialComm("");
+				if (available()) {
+					char c = (char)newObject.readByte();
+					System.out.println(c);
+				}
 			}
-		}
-		catch (SerialPortException e) {
+			catch (SerialPortException e) {
+			}
 		}
 	}
 }
