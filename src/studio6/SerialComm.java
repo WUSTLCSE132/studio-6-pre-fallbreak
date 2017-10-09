@@ -64,7 +64,7 @@ public class SerialComm {
 	public static void main(String[] args) {
 		while (true) {
 			try {
-				SerialComm newObject = new SerialComm("");
+				SerialComm newObject = new SerialComm("5");
 				if (available()) {
 					char c = (char)newObject.readByte();
 					System.out.println(c);
